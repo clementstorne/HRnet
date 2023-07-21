@@ -19,7 +19,9 @@ export default function EmployeeList() {
         <Title2 text="Current Employees" />
 
         <table id="employee-table" className="display"></table>
-        <Link to={`/`}>Home</Link>
+        <Link to={`/`} className="hover:drop-shadow">
+          Home
+        </Link>
       </div>
     </>
   );

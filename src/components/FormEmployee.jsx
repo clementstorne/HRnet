@@ -11,6 +11,8 @@ import FormFieldNumber from "./FormFieldNumber";
 import FormValidator from "../utils/formValidator";
 
 export default function FormEmployee() {
+  const employees = JSON.parse(localStorage.getItem("employees")) || [];
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -18,7 +20,7 @@ export default function FormEmployee() {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [zipcode, setZipcode] = useState(0);
+  const [zipCode, setZipCode] = useState(0);
   const [department, setDepartment] = useState("");
 
   const [errors, setErrors] = useState({
@@ -129,7 +131,7 @@ export default function FormEmployee() {
 
   function handleZipCodeChange(e) {
     const { value } = e.target;
-    setZipcode(value);
+    setZipCode(value);
     const errorMessage = FormValidator.validateField("zipCode", value);
     setErrors((prevErrors) => ({ ...prevErrors, zipCode: errorMessage }));
     if (errorMessage) {
@@ -141,7 +143,29 @@ export default function FormEmployee() {
 
   function saveEmployee(e) {
     e.preventDefault();
-    console.log("Created");
+    if (
+      !errors.firstName &&
+      !errors.lastName &&
+      !errors.birthDate &&
+      !errors.startDate &&
+      !errors.street &&
+      !errors.city &&
+      !errors.zipode
+    ) {
+      const employee = {
+        firstName,
+        lastName,
+        dateOfBirth: birthDate,
+        startDate,
+        department,
+        street,
+        city,
+        state,
+        zipCode,
+      };
+      employees.push(employee);
+      localStorage.setItem("employees", JSON.stringify(employees));
+    }
   }
 
   return (
@@ -296,7 +320,7 @@ export default function FormEmployee() {
             min={0}
             step={1}
             errorMessage={errors.zipode}
-            value={zipcode}
+            value={zipCode}
             event={handleZipCodeChange}
           />
         </fieldset>

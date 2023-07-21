@@ -26,6 +26,9 @@ export default {
         DEFAULT: "5px 5px 5px 0px rgba(0, 0, 0, 0.2)",
         md: "5px 5px 5px 0px rgba(0, 0, 0, 0.8)",
       },
+      dropShadow: {
+        DEFAULT: "5px 5px 5px rgba(0, 0, 0, 0.8)",
+      },
     },
   },
   plugins: [
