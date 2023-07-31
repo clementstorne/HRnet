@@ -7,11 +7,16 @@ import FormFieldDate from "./FormFieldDate";
 import FormSelect from "./FormSelect";
 import FormFieldNumber from "./FormFieldNumber";
 
+/** Store */
+import { useDispatch, useSelector } from "react-redux";
+import { addEmployee } from "../store/employeesSlice";
+
 /** Utils */
 import FormValidator from "../utils/formValidator";
 
 export default function FormEmployee() {
-  const employees = JSON.parse(localStorage.getItem("employees")) || [];
+  const dispatch = useDispatch();
+  const employeeList = useSelector((state) => state.employees.list);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -32,6 +37,245 @@ export default function FormEmployee() {
     city: "",
     zipode: "",
   });
+
+  const states = [
+    {
+      name: "Alabama",
+      abbreviation: "AL",
+    },
+    {
+      name: "Alaska",
+      abbreviation: "AK",
+    },
+    {
+      name: "American Samoa",
+      abbreviation: "AS",
+    },
+    {
+      name: "Arizona",
+      abbreviation: "AZ",
+    },
+    {
+      name: "Arkansas",
+      abbreviation: "AR",
+    },
+    {
+      name: "California",
+      abbreviation: "CA",
+    },
+    {
+      name: "Colorado",
+      abbreviation: "CO",
+    },
+    {
+      name: "Connecticut",
+      abbreviation: "CT",
+    },
+    {
+      name: "Delaware",
+      abbreviation: "DE",
+    },
+    {
+      name: "District Of Columbia",
+      abbreviation: "DC",
+    },
+    {
+      name: "Federated States Of Micronesia",
+      abbreviation: "FM",
+    },
+    {
+      name: "Florida",
+      abbreviation: "FL",
+    },
+    {
+      name: "Georgia",
+      abbreviation: "GA",
+    },
+    {
+      name: "Guam",
+      abbreviation: "GU",
+    },
+    {
+      name: "Hawaii",
+      abbreviation: "HI",
+    },
+    {
+      name: "Idaho",
+      abbreviation: "ID",
+    },
+    {
+      name: "Illinois",
+      abbreviation: "IL",
+    },
+    {
+      name: "Indiana",
+      abbreviation: "IN",
+    },
+    {
+      name: "Iowa",
+      abbreviation: "IA",
+    },
+    {
+      name: "Kansas",
+      abbreviation: "KS",
+    },
+    {
+      name: "Kentucky",
+      abbreviation: "KY",
+    },
+    {
+      name: "Louisiana",
+      abbreviation: "LA",
+    },
+    {
+      name: "Maine",
+      abbreviation: "ME",
+    },
+    {
+      name: "Marshall Islands",
+      abbreviation: "MH",
+    },
+    {
+      name: "Maryland",
+      abbreviation: "MD",
+    },
+    {
+      name: "Massachusetts",
+      abbreviation: "MA",
+    },
+    {
+      name: "Michigan",
+      abbreviation: "MI",
+    },
+    {
+      name: "Minnesota",
+      abbreviation: "MN",
+    },
+    {
+      name: "Mississippi",
+      abbreviation: "MS",
+    },
+    {
+      name: "Missouri",
+      abbreviation: "MO",
+    },
+    {
+      name: "Montana",
+      abbreviation: "MT",
+    },
+    {
+      name: "Nebraska",
+      abbreviation: "NE",
+    },
+    {
+      name: "Nevada",
+      abbreviation: "NV",
+    },
+    {
+      name: "New Hampshire",
+      abbreviation: "NH",
+    },
+    {
+      name: "New Jersey",
+      abbreviation: "NJ",
+    },
+    {
+      name: "New Mexico",
+      abbreviation: "NM",
+    },
+    {
+      name: "New York",
+      abbreviation: "NY",
+    },
+    {
+      name: "North Carolina",
+      abbreviation: "NC",
+    },
+    {
+      name: "North Dakota",
+      abbreviation: "ND",
+    },
+    {
+      name: "Northern Mariana Islands",
+      abbreviation: "MP",
+    },
+    {
+      name: "Ohio",
+      abbreviation: "OH",
+    },
+    {
+      name: "Oklahoma",
+      abbreviation: "OK",
+    },
+    {
+      name: "Oregon",
+      abbreviation: "OR",
+    },
+    {
+      name: "Palau",
+      abbreviation: "PW",
+    },
+    {
+      name: "Pennsylvania",
+      abbreviation: "PA",
+    },
+    {
+      name: "Puerto Rico",
+      abbreviation: "PR",
+    },
+    {
+      name: "Rhode Island",
+      abbreviation: "RI",
+    },
+    {
+      name: "South Carolina",
+      abbreviation: "SC",
+    },
+    {
+      name: "South Dakota",
+      abbreviation: "SD",
+    },
+    {
+      name: "Tennessee",
+      abbreviation: "TN",
+    },
+    {
+      name: "Texas",
+      abbreviation: "TX",
+    },
+    {
+      name: "Utah",
+      abbreviation: "UT",
+    },
+    {
+      name: "Vermont",
+      abbreviation: "VT",
+    },
+    {
+      name: "Virgin Islands",
+      abbreviation: "VI",
+    },
+    {
+      name: "Virginia",
+      abbreviation: "VA",
+    },
+    {
+      name: "Washington",
+      abbreviation: "WA",
+    },
+    {
+      name: "West Virginia",
+      abbreviation: "WV",
+    },
+    {
+      name: "Wisconsin",
+      abbreviation: "WI",
+    },
+    {
+      name: "Wyoming",
+      abbreviation: "WY",
+    },
+  ];
 
   function handleFirstNameChange(e) {
     const { value } = e.target;
@@ -131,7 +375,7 @@ export default function FormEmployee() {
 
   function handleZipCodeChange(e) {
     const { value } = e.target;
-    setZipCode(value);
+    setZipCode(parseInt(value));
     const errorMessage = FormValidator.validateField("zipCode", value);
     setErrors((prevErrors) => ({ ...prevErrors, zipCode: errorMessage }));
     if (errorMessage) {
@@ -141,9 +385,46 @@ export default function FormEmployee() {
     }
   }
 
+  function isFormEmpty() {
+    return (
+      firstName === "" ||
+      lastName === "" ||
+      birthDate === "" ||
+      startDate === "" ||
+      street === "" ||
+      city === "" ||
+      state === "" ||
+      zipCode === 0 ||
+      department === ""
+    );
+  }
+
+  function clearForm() {
+    setFirstName("");
+    setLastName("");
+    setBirthDate("");
+    setStartDate("");
+    setStreet("");
+    setCity("");
+    setState("");
+    setZipCode(0);
+    setDepartment("");
+    setErrors({
+      firstName: "",
+      lastName: "",
+      birthDate: "",
+      startDate: "",
+      street: "",
+      city: "",
+      zipode: "",
+    });
+  }
+
   function saveEmployee(e) {
     e.preventDefault();
-    if (
+    if (isFormEmpty()) {
+      return;
+    } else if (
       !errors.firstName &&
       !errors.lastName &&
       !errors.birthDate &&
@@ -153,6 +434,7 @@ export default function FormEmployee() {
       !errors.zipode
     ) {
       const employee = {
+        id: employeeList.length + 1,
         firstName,
         lastName,
         dateOfBirth: birthDate,
@@ -163,8 +445,8 @@ export default function FormEmployee() {
         state,
         zipCode,
       };
-      employees.push(employee);
-      localStorage.setItem("employees", JSON.stringify(employees));
+      dispatch(addEmployee(employee));
+      clearForm();
     }
   }
 
@@ -211,11 +493,11 @@ export default function FormEmployee() {
           id="department"
           label="Department"
           options={[
-            "Sales",
-            "Marketing",
-            "Engineering",
-            "Human Resources",
-            "Legal",
+            { name: "Sales", abbreviation: "Sales" },
+            { name: "Marketing", abbreviation: "Marketing" },
+            { name: "Engineering", abbreviation: "Engineering" },
+            { name: "Human Resources", abbreviation: "Human Resources" },
+            { name: "Legal", abbreviation: "Legal" },
           ]}
           errorMessage={errors.department}
           value={department}
@@ -248,67 +530,7 @@ export default function FormEmployee() {
             isRequired={true}
             id="state"
             label="State"
-            options={[
-              "Alabama",
-              "Alaska",
-              "American Samoa",
-              "Arizona",
-              "Arkansas",
-              "California",
-              "Colorado",
-              "Connecticut",
-              "Delaware",
-              "District Of Columbia",
-              "Federated States Of Micronesia",
-              "Florida",
-              "Georgia",
-              "Guam",
-              "Hawaii",
-              "Idaho",
-              "Illinois",
-              "Indiana",
-              "Iowa",
-              "Kansas",
-              "Kentucky",
-              "Louisiana",
-              "Maine",
-              "Marshall Islands",
-              "Maryland",
-              "Massachusetts",
-              "Michigan",
-              "Minnesota",
-              "Mississippi",
-              "Missouri",
-              "Montana",
-              "Nebraska",
-              "Nevada",
-              "New Hampshire",
-              "New Jersey",
-              "New Mexico",
-              "New York",
-              "North Carolina",
-              "North Dakota",
-              "Northern Mariana Islands",
-              "Ohio",
-              "Oklahoma",
-              "Oregon",
-              "Palau",
-              "Pennsylvania",
-              "Puerto Rico",
-              "Rhode Island",
-              "South Carolina",
-              "South Dakota",
-              "Tennessee",
-              "Texas",
-              "Utah",
-              "Vermont",
-              "Virgin Islands",
-              "Virginia",
-              "Washington",
-              "West Virginia",
-              "Wisconsin",
-              "Wyoming",
-            ]}
+            options={states}
             errorMessage={errors.state}
             value={state}
             event={handleStateChange}
@@ -325,12 +547,12 @@ export default function FormEmployee() {
           />
         </fieldset>
       </div>
-      <button
+      <input
+        type="submit"
         onClick={saveEmployee}
         className="w-full bg-tertiary rounded-md text-xl m-0 text-white p-2 shadow hover:shadow-md focus:shadow-md md:col-span-2"
-      >
-        Save
-      </button>
+        value="Save"
+      />
     </form>
   );
 }

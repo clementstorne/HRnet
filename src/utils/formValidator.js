@@ -8,8 +8,19 @@ class FormValidator {
    * @return  {Boolean}      'true' if the name is correct 'false' if not
    */
   static isNameValid(str) {
-    let regex =
+    const regex =
       /^[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\/\<\>\=\@\[\]\\\^\_\{\}\|\~]{2,}$/;
+    return regex.test(str);
+  }
+
+  static isAdressValid(str) {
+    const regex =
+      /^[^\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\/\<\>\=\@\[\]\\\^\_\{\}\|\~]{2,}$/;
+    return regex.test(str);
+  }
+
+  static isZipCodeValid(str) {
+    const regex = /^[0-9]+$/;
     return regex.test(str);
   }
 
@@ -36,7 +47,7 @@ class FormValidator {
       case "street":
         if (value.trim() === "") {
           return "Street is required";
-        } else if (!FormValidator.isNameValid(value)) {
+        } else if (!FormValidator.isAdressValid(value)) {
           return "Street format is incorrect";
         }
         break;
