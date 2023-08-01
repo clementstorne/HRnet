@@ -182,6 +182,18 @@ const employeesState = {
       zipCode: "10467",
       department: "Legal",
     },
+    {
+      id: 16,
+      firstName: "Rhonda",
+      lastName: "Mills",
+      dateOfBirth: "1983-03-11",
+      startDate: "2013-08-20",
+      street: "2247 American Drive",
+      city: "Tallahassee",
+      state: "FL",
+      zipCode: "32312",
+      department: "Sales",
+    },
   ],
 };
 

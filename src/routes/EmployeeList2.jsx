@@ -1,11 +1,12 @@
 /** Components */
 import Navbar from "../components/Navbar";
 import Title2 from "../components/Title2";
-import Table from "../components/DataTable";
 import ButtonLink from "../components/ButtonLink";
 
 /** Store */
 import { useSelector } from "react-redux";
+
+import DataTable from "react-data-table-component";
 
 /** Assets */
 
@@ -15,47 +16,47 @@ export default function EmployeeList() {
   const columns = [
     {
       name: "First Name",
-      selector: "firstName",
+      selector: (row) => row.firstName,
       sortable: true,
     },
     {
       name: "Last Name",
-      selector: "lastName",
+      selector: (row) => row.lastName,
       sortable: true,
     },
     {
       name: "Start Date",
-      selector: "startDate",
+      selector: (row) => row.startDate,
       sortable: true,
     },
     {
       name: "Department",
-      selector: "department",
+      selector: (row) => row.department,
       sortable: true,
     },
     {
       name: "Date of Birth",
-      selector: "dateOfBirth",
+      selector: (row) => row.dateOfBirth,
       sortable: true,
     },
     {
       name: "Street",
-      selector: "street",
+      selector: (row) => row.street,
       sortable: true,
     },
     {
       name: "City",
-      selector: "city",
+      selector: (row) => row.city,
       sortable: true,
     },
     {
       name: "State",
-      selector: "state",
+      selector: (row) => row.state,
       sortable: true,
     },
     {
       name: "Zip Code",
-      selector: "zipCode",
+      selector: (row) => row.zipCode,
       sortable: true,
     },
   ];
@@ -67,7 +68,7 @@ export default function EmployeeList() {
         <Title2 text="Current Employees" />
 
         <div className="w-11/12 p-5 mb-5 bg-light rounded-md shadow">
-          <Table columns={columns} data={data} />
+          <DataTable columns={columns} data={data} pagination />
         </div>
 
         <ButtonLink title="Home" link="/" />
