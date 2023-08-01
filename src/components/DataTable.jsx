@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 /** Components */
 import DataTableNumberOfEntries from "./DataTableNumberOfEntries";
+import DataTableFilter from "./DataTableFilter";
 import DataTableHeaderRow from "./DataTableHeaderRow";
 import DataTableRow from "./DataTableRow";
 import DataTablePagination from "./DataTablePagination";
@@ -26,7 +27,6 @@ export default function DataTable({ columns, data }) {
 
   const handleNumberOfEntriesChange = (number) => {
     setNumberOfEntries(parseInt(number));
-    console.log(lastEntry);
   };
 
   const handleClickPrevious = () => {
@@ -45,6 +45,12 @@ export default function DataTable({ columns, data }) {
     }
   };
 
+  const [filter, setFilter] = useState("");
+
+  const handleChangeOfFilter = (string) => {
+    setFilter(string);
+  };
+
   useEffect(() => {
     setEntriesToShow(data.slice(firstEntry, lastEntry));
   }, [firstEntry, numberOfEntries]);
@@ -56,6 +62,7 @@ export default function DataTable({ columns, data }) {
           options={numberOfEntriesOptions}
           onNumberOfEntriesChange={handleNumberOfEntriesChange}
         />
+        <DataTableFilter onChangeOfFilter={handleChangeOfFilter} />
       </div>
       <table className="w-full my-3 table-auto border-collapse border border-black">
         <DataTableHeaderRow columns={columns} />
