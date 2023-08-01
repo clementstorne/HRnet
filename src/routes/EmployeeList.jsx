@@ -9,6 +9,8 @@ import Title2 from "../components/Title2";
 import { useSelector } from "react-redux";
 
 import DataTable from "react-data-table-component";
+// import { DataTable } from "primereact/datatable";
+// import { Column } from "primereact/column";
 
 /** Assets */
 
@@ -68,8 +70,8 @@ export default function EmployeeList() {
       <div className="flex flex-col items-center justify-center p-5">
         <Title2 text="Current Employees" />
 
-        <table id="employee-table" className="display"></table>
         <DataTable columns={columns} data={data} pagination />
+
         <Link to={`/`} className="hover:drop-shadow">
           Home
         </Link>

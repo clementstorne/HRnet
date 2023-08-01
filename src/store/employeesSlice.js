@@ -196,5 +196,4 @@ const employeesSlice = createSlice({
 });
 
 export const { addEmployee } = employeesSlice.actions;
-
-export const employeesReducer = employeesSlice.reducer;
+export default employeesSlice.reducer;

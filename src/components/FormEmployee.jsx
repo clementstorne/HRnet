@@ -10,6 +10,7 @@ import FormFieldNumber from "./FormFieldNumber";
 /** Store */
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployee } from "../store/employeesSlice";
+import { openModal } from "../store/modalSlice";
 
 /** Utils */
 import FormValidator from "../utils/formValidator";
@@ -447,6 +448,7 @@ export default function FormEmployee() {
       };
       dispatch(addEmployee(employee));
       clearForm();
+      dispatch(openModal("Employee Created!"));
     }
   }
 
