@@ -51,6 +51,19 @@ export default function DataTable({ columns, data }) {
     setFilter(string);
   };
 
+  const filterFirstName = () => {
+    return data.filter((item) => {
+      item.firstName.toLowerCase().includes(filter.toLowerCase());
+    });
+  };
+
+  // console.log(data);
+  // const filteredTbl = data.filter((item) => {
+  //   item.firstName.toLowerCase().includes("ar".toLowerCase());
+  // });
+  // const filteredTbl = filterFirstName();
+  // console.log(filteredTbl);
+
   const [sortConfig, setSortConfig] = useState({
     key: "id",
     direction: "ascending",
@@ -64,25 +77,25 @@ export default function DataTable({ columns, data }) {
     setSortConfig({ key, direction });
   };
 
-  const sortedData = () => {
-    if (sortConfig.key) {
-      return [...data].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return data;
-  };
-
   useEffect(() => {
+    const sortedData = () => {
+      if (sortConfig.key) {
+        return [...data].sort((a, b) => {
+          if (a[sortConfig.key] < b[sortConfig.key]) {
+            return sortConfig.direction === "ascending" ? -1 : 1;
+          }
+          if (a[sortConfig.key] > b[sortConfig.key]) {
+            return sortConfig.direction === "ascending" ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+      return data;
+    };
+
     const sortedDataArray = sortedData();
     setEntriesToShow(sortedDataArray.slice(firstEntry, lastEntry));
-  }, [firstEntry, numberOfEntries, sortConfig]);
+  }, [firstEntry, lastEntry, numberOfEntries, sortConfig, data]);
 
   return (
     <>
