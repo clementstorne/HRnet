@@ -14,7 +14,6 @@ export default function App() {
 
       <div className="flex flex-col items-center justify-center p-5">
         <ButtonLink title="View Current Employees" link="/employee-list" />
-        <ButtonLink title="View List" link="/list" />
 
         <Title2 text="Create Employee" />
 

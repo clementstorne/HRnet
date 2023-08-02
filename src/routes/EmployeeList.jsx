@@ -1,8 +1,8 @@
 /** Components */
 import Navbar from "../components/Navbar";
 import Title2 from "../components/Title2";
-import Table from "../components/DataTable";
 import ButtonLink from "../components/ButtonLink";
+import DataTable from "data-table-component";
 
 /** Store */
 import { useSelector } from "react-redux";
@@ -67,7 +67,7 @@ export default function EmployeeList() {
         <Title2 text="Current Employees" />
 
         <div className="w-11/12 p-5 mb-5 bg-light rounded-md shadow">
-          <Table columns={columns} data={data} />
+          <DataTable columns={columns} data={data} />
         </div>
 
         <ButtonLink title="Home" link="/" />
