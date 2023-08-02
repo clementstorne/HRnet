@@ -51,19 +51,6 @@ export default function DataTable({ columns, data }) {
     setFilter(string);
   };
 
-  const filterFirstName = () => {
-    return data.filter((item) => {
-      item.firstName.toLowerCase().includes(filter.toLowerCase());
-    });
-  };
-
-  // console.log(data);
-  // const filteredTbl = data.filter((item) => {
-  //   item.firstName.toLowerCase().includes("ar".toLowerCase());
-  // });
-  // const filteredTbl = filterFirstName();
-  // console.log(filteredTbl);
-
   const [sortConfig, setSortConfig] = useState({
     key: "id",
     direction: "ascending",
@@ -94,8 +81,28 @@ export default function DataTable({ columns, data }) {
     };
 
     const sortedDataArray = sortedData();
-    setEntriesToShow(sortedDataArray.slice(firstEntry, lastEntry));
-  }, [firstEntry, lastEntry, numberOfEntries, sortConfig, data]);
+
+    const filterFirstName = () => {
+      return sortedDataArray.filter((item) => {
+        return item.firstName.toLowerCase().includes(filter.toLowerCase());
+      });
+    };
+
+    const filterLastName = () => {
+      return sortedDataArray.filter((item) => {
+        return item.lastName.toLowerCase().includes(filter.toLowerCase());
+      });
+    };
+
+    const filterGlobal = () => {
+      const result = filterFirstName().concat(filterLastName());
+      return [...new Set(result)];
+    };
+
+    const filteredDataArray = filterGlobal();
+
+    setEntriesToShow(filteredDataArray.slice(firstEntry, lastEntry));
+  }, [firstEntry, lastEntry, numberOfEntries, sortConfig, filter, data]);
 
   return (
     <>

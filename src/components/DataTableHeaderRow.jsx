@@ -25,7 +25,7 @@ export default function DataTableHeaderRow({
         {columns.map((column) => {
           return (
             <th
-              className={`border border-black bg-tertiary text-white py-2`}
+              className={`border border-black bg-tertiary text-white py-2 cursor-pointer`}
               id={column.selector}
               key={column.selector}
               onClick={handleClick}
