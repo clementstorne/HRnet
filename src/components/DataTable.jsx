@@ -51,9 +51,38 @@ export default function DataTable({ columns, data }) {
     setFilter(string);
   };
 
+  const [sortConfig, setSortConfig] = useState({
+    key: "id",
+    direction: "ascending",
+  });
+
+  const handleSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = () => {
+    if (sortConfig.key) {
+      return [...data].sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return data;
+  };
+
   useEffect(() => {
-    setEntriesToShow(data.slice(firstEntry, lastEntry));
-  }, [firstEntry, numberOfEntries]);
+    const sortedDataArray = sortedData();
+    setEntriesToShow(sortedDataArray.slice(firstEntry, lastEntry));
+  }, [firstEntry, numberOfEntries, sortConfig]);
 
   return (
     <>
@@ -65,7 +94,11 @@ export default function DataTable({ columns, data }) {
         <DataTableFilter onChangeOfFilter={handleChangeOfFilter} />
       </div>
       <table className="w-full my-3 table-auto border-collapse border border-black">
-        <DataTableHeaderRow columns={columns} />
+        <DataTableHeaderRow
+          columns={columns}
+          onChangeOfSort={handleSort}
+          sortDirection={sortConfig.direction}
+        />
         <tbody>
           {entriesToShow.map((row) => {
             return <DataTableRow data={row} columns={columns} key={row.id} />;
