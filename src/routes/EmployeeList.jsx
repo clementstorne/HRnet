@@ -67,7 +67,14 @@ export default function EmployeeList() {
         <Title2 text="Current Employees" />
 
         <div className="w-11/12 p-5 mb-5 bg-light rounded-md shadow">
-          <DataTable columns={columns} data={data} />
+          <DataTable
+            columns={columns}
+            data={data}
+            headerColor={"#446404"}
+            rowColor={"#eef1e6"}
+            alternateRowColor={"#94ac1b"}
+            hoverRowColor={"#687f11"}
+          />
         </div>
 
         <ButtonLink title="Home" link="/" />
