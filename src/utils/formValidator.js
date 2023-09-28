@@ -72,6 +72,21 @@ class FormValidator {
           return "Start date format is incorrect";
         }
         break;
+      case "department":
+        if (value === "") {
+          return "Department date is required";
+        }
+        break;
+      case "state":
+        if (value === "") {
+          return "State date is required";
+        }
+        break;
+      case "zipCode":
+        if (value === 0) {
+          return "Zip code is required";
+        }
+        break;
       default:
         break;
     }

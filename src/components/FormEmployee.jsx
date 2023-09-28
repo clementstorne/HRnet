@@ -36,7 +36,7 @@ export default function FormEmployee() {
     startDate: "",
     street: "",
     city: "",
-    zipode: "",
+    zipCode: "",
   });
 
   const states = [
@@ -424,6 +424,42 @@ export default function FormEmployee() {
   function saveEmployee(e) {
     e.preventDefault();
     if (isFormEmpty()) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        firstName: FormValidator.validateField("firstName", firstName),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        lastName: FormValidator.validateField("lastName", lastName),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        birthDate: FormValidator.validateField("birthDate", birthDate),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        startDate: FormValidator.validateField("startDate", startDate),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        department: FormValidator.validateField("department", department),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        state: FormValidator.validateField("state", state),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        street: FormValidator.validateField("street", street),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        city: FormValidator.validateField("city", city),
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        zipCode: FormValidator.validateField("zipCode", zipCode),
+      }));
       return;
     } else if (
       !errors.firstName &&
@@ -543,7 +579,7 @@ export default function FormEmployee() {
             label="Zip code"
             min={0}
             step={1}
-            errorMessage={errors.zipode}
+            errorMessage={errors.zipCode}
             value={zipCode}
             event={handleZipCodeChange}
           />
